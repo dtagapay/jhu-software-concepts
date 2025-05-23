@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<!-- Centered animated page title -->
+<div style="text-align: center; margin-bottom: -10px;">
+    <h1 class="animated-line" style="font-size: 60px; font-weight: bold; margin: 0;">
+        Welcome
+    </h1>
+    <h1 class="animated-line" style="font-size: 60px; font-weight: bold; margin: 0;">
+        to My Developer Website!
+    </h1>
+</div>
+
+<!-- Flex layout: bio on left, image on right -->
+<div class="flex" style="align-items: center; margin: 0 60px;">
+    <div style="flex: 2;">
+        <div class="text-box">
+            <h1 class="animated-line" style="font-size: 40px; font-weight: bold; margin-bottom: 10px;">
+                Darren Agapay
+            </h1>
+            <h4 class="animated-line">
+                Position/Role: Aerospace Engineer at U.S. Army DEVCOM Aviation and Missile Center
+            </h4>
+            <p class="animated-line">
+                My name is Darren Agapay. I got my B.S. in Aerospace Engineering at Virginia Tech (GOKIES!) in May 2024. 
+                I have less than 3 months programming experience, but the reason I even thought of pursuing my master's of science in AI with JHU 
+                is because of the endless capabilities it's currently capable of and will be capable of in the future. I want to bridge both 
+                software engineering and aerospace engineering to discover and establish new technologies for both defense and commercial applications 
+                in the aerospace industry. I look forward to taking the course and getting my foot into the software engineering world!
+            </p>
+        </div>
+    </div>
+    <div style="flex: 1;">
+        <img src="{{ url_for('static', filename='IMG_3525.JPEG') }}" alt="My Photo"
+             style="max-width: 80%; border-radius: 10px;" class="animated-line">
+    </div>
+</div>
+{% endblock %}
