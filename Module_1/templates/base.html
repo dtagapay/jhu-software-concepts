@@ -9,9 +9,9 @@
 <body>
     <!-- Navigation bar -->
     <nav>
-    <a href="{{ url_for('contact') }}" class="{% if request.path == '/contact' %}active{% endif %}">Contact</a>
-    <a href="{{ url_for('projects') }}" class="{% if request.path == '/projects' %}active{% endif %}">Projects</a>
-    <a href="{{ url_for('home') }}" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+    <a href="{{ url_for('contact.contact') }}" class="{% if request.path == '/contact' %}active{% endif %}">Contact</a>
+    <a href="{{ url_for('projects.projects') }}" class="{% if request.path == '/projects' %}active{% endif %}">Projects</a>
+    <a href="{{ url_for('home.home') }}" class="{% if request.path == '/' %}active{% endif %}">Home</a>
 </nav>
     <!-- Main content container -->
     <div class="container">
