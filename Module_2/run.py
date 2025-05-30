@@ -3,7 +3,7 @@ from scrape import scrape_data         # Function to fetch HTML data from thegra
 from clean import clean_data, save_data  # Functions to clean and save parsed data
 
 def main():
-    html_pages = scrape_data(max_pages=10, delay=0.5)
+    html_pages = scrape_data(max_pages=500, delay=0.5)
 
     all_data = []
     for html in html_pages:

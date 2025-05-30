@@ -42,6 +42,10 @@ def scrape_data(max_pages=100, delay=1):
 
             html = response.data.decode('utf-8')
             all_html_pages.append(html)
+
+            if page == 500:
+                print("Successfully fetched page 500 — scraper is still running...")
+
         except Exception as e:
             print(f"Error fetching page {page}: {e}")
             break

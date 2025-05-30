@@ -95,8 +95,8 @@ def clean_data(html_text):
 
         # Extract term
         term = ""
-        cell_text = cells[4].get_text(" ", strip=True)
-        match = re.search(r"\b(Fall|Spring|Summer|Winter)\s+\d{4}\b", cell_text)
+        cell_text = cells[4].get_text(strip=True)
+        match = re.search(r"(Fall|Spring|Summer|Winter)\s+\d{4}", cell_text)
         if match:
             term = match.group(0)
 
