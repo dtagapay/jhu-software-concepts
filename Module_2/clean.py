@@ -93,13 +93,12 @@ def clean_data(html_text):
         status = cells[3].get_text(strip=True)
         comments = cells[4].get_text(strip=True)
 
-        # Extract term from pills in cell[4]
+        # Extract term
         term = ""
-        for tag in cells[4].find_all(True):  # True = all tags
-            text = tag.get_text(strip=True)
-            if re.search(r"(Fall|Spring|Summer|Winter)\s+\d{4}", text):
-                term = text
-                break
+        cell_text = cells[4].get_text(" ", strip=True)
+        match = re.search(r"\b(Fall|Spring|Summer|Winter)\s+\d{4}\b", cell_text)
+        if match:
+            term = match.group(0)
 
         # Extract result URL
         url = ""

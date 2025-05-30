@@ -1,45 +1,51 @@
-
 import urllib3
-from urllib.robotparser import RobotFileParser
 import time
+from urllib.robotparser import RobotFileParser
 
 def scrape_data(max_pages=100, delay=1):
-    '''
-    Scrape paginated data from TheGradCafe's survey results page.
+    """
+    Scrape multiple pages of TheGradCafe survey results.
+    
     Args:
-        max_pages: Maximum number of pages to scrape (default 100).
-        delay: Delay between requests in seconds to avoid rate limiting (default 1s).
+        max_pages (int): Number of pages to scrape.
+        delay (int): Delay in seconds between requests to avoid throttling.
+
     Returns:
-        Combined HTML content from all pages.
-    '''
+        List[str]: A list of raw HTML strings, one for each page.
+    """
     base_url = "https://www.thegradcafe.com/survey/?page={}"
     robots_url = "https://www.thegradcafe.com/robots.txt"
 
-    # Load and parse the robots.txt file
+    # Check robots.txt for permission
     rp = RobotFileParser()
     rp.set_url(robots_url)
     rp.read()
 
-    # Check permission to scrape one of the paginated URLs
     test_url = base_url.format(1)
     if not rp.can_fetch("*", test_url):
         raise PermissionError("Scraping disallowed by robots.txt")
 
     http = urllib3.PoolManager()
-    all_html = ""
+    headers = {"User-Agent": "Mozilla/5.0"}
+
+    all_html_pages = []
 
     for page in range(1, max_pages + 1):
         url = base_url.format(page)
-        response = http.request('GET', url)
+        print(f"Fetching page {page}...")
 
-        if response.status != 200:
-            print(f"Page {page} fetch failed, stopping...")
+        try:
+            response = http.request('GET', url, headers=headers)
+            if response.status != 200:
+                print(f"Page {page} fetch failed with status {response.status}, stopping.")
+                break
+
+            html = response.data.decode('utf-8')
+            all_html_pages.append(html)
+        except Exception as e:
+            print(f"Error fetching page {page}: {e}")
             break
 
-        html = response.data.decode('utf-8')
-        all_html += html
-
-        print(f"Fetched page {page}")
         time.sleep(delay)
 
-    return all_html
+    return all_html_pages
