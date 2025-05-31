@@ -5,6 +5,7 @@ import urllib3
 
 http = urllib3.PoolManager()
 
+# Helper function to get extra info like GPA, GRE, etc. from individual result page
 def _fetch_optional_fields(url):
     headers = {"User-Agent": "Mozilla/5.0"}
     data = {
@@ -19,8 +20,10 @@ def _fetch_optional_fields(url):
         response = http.request('GET', url, headers=headers)
         if response.status != 200:
             return data
+
         soup = BeautifulSoup(response.data.decode('utf-8'), 'html.parser')
         divs = soup.find_all('div')
+
         for div in divs:
             text = div.get_text(strip=True)
 
@@ -30,7 +33,7 @@ def _fetch_optional_fields(url):
                 if match:
                     data["GPA"] = match.group(1)
 
-            # GRE General
+            # GRE Total
             if "GRE General" in text and not data["GRE"]:
                 match = re.search(r"GRE General[:\s]+(\d{2,3})", text)
                 if match:
@@ -42,7 +45,7 @@ def _fetch_optional_fields(url):
                 if match:
                     data["GRE V"] = match.group(1)
 
-            # Analytical Writing (AW)
+            # Analytical Writing
             if "Analytical Writing" in text and not data["GRE AW"]:
                 match = re.search(r"Analytical Writing[:\s]+(\d\.\d{1,2})", text)
                 if match:
@@ -59,6 +62,7 @@ def _fetch_optional_fields(url):
     except:
         return data
 
+# Main function to parse each HTML page into structured applicant data
 def clean_data(html_text):
     soup = BeautifulSoup(html_text, 'html.parser')
     applicants = []
@@ -71,6 +75,7 @@ def clean_data(html_text):
         if len(cells) < 5:
             continue
 
+        # Extract university and program name
         university = cells[0].get_text(strip=True)
         program_line = cells[1].get_text(strip=True)
 
@@ -89,27 +94,30 @@ def clean_data(html_text):
         program_name = program_name.strip()
         program_full = f"{program_name}, {university}"
 
+        # Other fields
         post_date = cells[2].get_text(strip=True)
         status = cells[3].get_text(strip=True)
         comments = cells[4].get_text(strip=True)
 
-        # Extract term
+        # Extract start term if mentioned in comments
         term = ""
         cell_text = cells[4].get_text(strip=True)
         match = re.search(r"(Fall|Spring|Summer|Winter)\s+\d{4}", cell_text)
         if match:
             term = match.group(0)
 
-        # Extract result URL
+        # Construct result URL
         url = ""
         span_with_id = entry.find('span', attrs={'data-id': True})
         if span_with_id and span_with_id.has_attr('data-id'):
             result_id = span_with_id['data-id']
             url = f"https://www.thegradcafe.com/result/{result_id}"
 
+        # Remove placeholder text from comments
         if "Total commentsOpen options" in comments:
             comments = ""
 
+        # Build the main record
         applicant = {
             "program": program_full,
             "comments": "",
@@ -125,7 +133,7 @@ def clean_data(html_text):
             "Degree": degree
         }
 
-        # Get GPA, GRE, etc. from detail page
+        # Fetch extra fields if we have a URL
         if url:
             optional = _fetch_optional_fields(url)
             applicant.update(optional)
@@ -134,6 +142,7 @@ def clean_data(html_text):
 
     return applicants
 
+# Save final list of applicants to a JSON file
 def save_data(data, filename="applicant_data.json"):
     with open(filename, 'w') as f:
         json.dump(data, f, indent=2)
