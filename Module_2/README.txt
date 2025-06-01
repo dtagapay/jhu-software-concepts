@@ -14,9 +14,7 @@ This project implements a web scraper for TheGradCafe's graduate admissions resu
 
 To match the assignment sample format, each entry is saved as a dictionary with keys including "program", "comments", "date_added", "url", "status", "term", "US/International", "GPA", "GRE", "GRE V", "GRE AW", and "Degree".
 
-A fallback approach was implemented when HTML structure inconsistencies were detected (e.g., flattening all text from cells to extract the term field). The script also logs progress for easier debugging.
-
 4. Known Bugs:
 - Term was unable to be captured along with comments
 
-If permitted to use headless browser automation tools, these fields could be reliably extracted in a future version.
+
