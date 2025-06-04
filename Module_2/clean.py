@@ -22,8 +22,22 @@ def _fetch_optional_fields(url):
             return data
 
         soup = BeautifulSoup(response.data.decode('utf-8'), 'html.parser')
-        divs = soup.find_all('div')
 
+        # ✅ Extract comment from <dt>Notes</dt> → <dd>Comment</dd>
+        try:
+            for dt in soup.find_all("dt"):
+                if dt.get_text(strip=True).lower() == "notes":
+                    dd = dt.find_next_sibling("dd")
+                    if dd:
+                        comment_text = dd.get_text(separator="\n", strip=True)
+                        if comment_text and "Details and information" not in comment_text:
+                            data["comments"] = comment_text
+                            break
+        except Exception as e:
+            print(f"Notes extraction failed: {e}")
+
+        # ✅ Extract GPA, GRE, AW, Nationality
+        divs = soup.find_all('div')
         for div in divs:
             text = div.get_text(strip=True)
 
@@ -33,7 +47,7 @@ def _fetch_optional_fields(url):
                 if match:
                     data["GPA"] = match.group(1)
 
-            # GRE Total
+            # GRE General
             if "GRE General" in text and not data["GRE"]:
                 match = re.search(r"GRE General[:\s]+(\d{2,3})", text)
                 if match:
@@ -59,7 +73,8 @@ def _fetch_optional_fields(url):
                     data["US/International"] = "American"
 
         return data
-    except:
+    except Exception as e:
+        print(f"fetch_optional_fields error: {e}")
         return data
 
 # Main function to parse each HTML page into structured applicant data

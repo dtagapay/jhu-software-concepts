@@ -4,7 +4,7 @@ from clean import clean_data, save_data  # Functions to clean and save parsed da
 
 def main():
     # Step 1: Scrape HTML from up to 500 GradCafe pages
-    html_pages = scrape_data(max_pages=500, delay=0.5)
+    html_pages = scrape_data(max_pages=10, delay=0.5)
 
     # Step 2: Clean and extract structured data
     all_data = []
