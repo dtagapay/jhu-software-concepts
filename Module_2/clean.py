@@ -23,7 +23,7 @@ def _fetch_optional_fields(url):
 
         soup = BeautifulSoup(response.data.decode('utf-8'), 'html.parser')
 
-        # ✅ Extract comment from <dt>Notes</dt> → <dd>Comment</dd>
+        # Extract comment from <dt>Notes</dt> → <dd>Comment</dd>
         try:
             for dt in soup.find_all("dt"):
                 if dt.get_text(strip=True).lower() == "notes":
@@ -83,11 +83,17 @@ def clean_data(html_text):
     applicants = []
 
     table = soup.find('table')
-    entries = table.find_all('tr') if table else []
-
+    entries = table.find_all(['tr']) if table else []
     for entry in entries:
+        # print(entry)
         cells = entry.find_all('td')
         if len(cells) < 5:
+            for cell in entry.find_all("div"):
+                term = ""
+                text = cell.get_text(strip=True)
+                if re.match(r"^(Fall|Spring|Summer|Winter)\s+\d{4}$", text):
+                    term = text
+                    break
             continue
 
         # Extract university and program name
@@ -112,14 +118,6 @@ def clean_data(html_text):
         # Other fields
         post_date = cells[2].get_text(strip=True)
         status = cells[3].get_text(strip=True)
-        comments = cells[4].get_text(strip=True)
-
-        # Extract start term if mentioned in comments
-        term = ""
-        cell_text = cells[4].get_text(strip=True)
-        match = re.search(r"(Fall|Spring|Summer|Winter)\s+\d{4}", cell_text)
-        if match:
-            term = match.group(0)
 
         # Construct result URL
         url = ""
@@ -127,10 +125,6 @@ def clean_data(html_text):
         if span_with_id and span_with_id.has_attr('data-id'):
             result_id = span_with_id['data-id']
             url = f"https://www.thegradcafe.com/result/{result_id}"
-
-        # Remove placeholder text from comments
-        if "Total commentsOpen options" in comments:
-            comments = ""
 
         # Build the main record
         applicant = {
