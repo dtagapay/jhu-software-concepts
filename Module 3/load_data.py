@@ -2,46 +2,24 @@ import json
 import psycopg2
 from psycopg2 import OperationalError
 
-# -------- HELPER: Safely convert strings to float or return None --------
-def safe_float(val):
-    try:
-        f = float(val)
-        if f == 0.0:
-            return None  # treat "0" or 0.0 as missing data
-        return f
-    except:
-        return None
-
-# -------- DATABASE CONNECTION SETUP --------
-DB_NAME   = "gradcafe_data"
-DB_USER   = "gradcafe"
-DB_PASS   = "abc123"      # <-- update if needed
-DB_HOST   = "127.0.0.1"
-DB_PORT   = "5432"
-
-def create_connection():
-    """
-    Establish and return a connection to PostgreSQL using psycopg2.
-    """
+# Function to connect to PostgreSQL
+def create_connection(db_name, db_user, db_password, db_host, db_port):
     connection = None
     try:
         connection = psycopg2.connect(
-            database=DB_NAME,
-            user=DB_USER,
-            password=DB_PASS,
-            host=DB_HOST,
-            port=DB_PORT,
+            database=db_name,
+            user=db_user,
+            password=db_password,
+            host=db_host,
+            port=db_port,
         )
-        print(f"✅ Connection to PostgreSQL DB '{DB_NAME}' successful")
+        print(f"✅ Connection to PostgreSQL DB '{db_name}' successful")
     except OperationalError as e:
         print(f"❌ The error '{e}' occurred")
     return connection
 
-# -------- CREATE TABLE IF NOT EXISTS --------
+# Function to create the applicants table
 def create_table(conn):
-    """
-    Create the 'applicants' table if it doesn't exist already.
-    """
     query = """
     CREATE TABLE IF NOT EXISTS applicants (
         p_id SERIAL PRIMARY KEY,
@@ -52,7 +30,7 @@ def create_table(conn):
         status TEXT,
         term TEXT,
         us_or_international TEXT,
-        gpa FLOAT,       -- FLOAT columns allow NULL by default
+        gpa FLOAT,
         gre FLOAT,
         gre_v FLOAT,
         gre_aw FLOAT,
@@ -64,16 +42,29 @@ def create_table(conn):
     conn.commit()
     print("✅ Table 'applicants' ensured")
 
-# -------- LOAD JSON AND INSERT INTO TABLE --------
+# Clean GPA/GRE-style fields
+def clean_score(value):
+    try:
+        val = float(value)
+        if val == 0.0:
+            return None
+        return val
+    except (ValueError, TypeError):
+        return None
+
+# Load JSON into the applicants table
 def load_data(conn, filepath="applicant_data.json"):
-    """
-    Read applicant_data.json, convert fields safely, and insert rows into 'applicants'.
-    Missing or non‐numeric GPAs/GREs become NULL instead of 0.0.
-    """
+    cursor = conn.cursor()
+
+    # 🧹 Clear existing data
+    cursor.execute("DELETE FROM applicants;")
+    conn.commit()
+    print("🧹 Existing data cleared from 'applicants'")
+
+    # Load and parse JSON
     with open(filepath, "r", encoding="utf-8") as file:
         data = json.load(file)
 
-    cursor = conn.cursor()
     for row in data:
         try:
             cursor.execute("""
@@ -90,21 +81,23 @@ def load_data(conn, filepath="applicant_data.json"):
                 row.get("status"),
                 row.get("term"),
                 row.get("US/International"),
-                safe_float(row.get("GPA")),       # None if missing/invalid
-                safe_float(row.get("GRE")),       # None if missing/invalid
-                safe_float(row.get("GRE V")),     # None if missing/invalid
-                safe_float(row.get("GRE AW")),    # None if missing/invalid
+                clean_score(row.get("GPA")),
+                clean_score(row.get("GRE")),
+                clean_score(row.get("GRE V")),
+                clean_score(row.get("GRE AW")),
                 row.get("Degree")
             ))
         except Exception as e:
             print(f"⚠️ Skipped entry due to error: {e}\nData: {row}")
-
+    
     conn.commit()
     print("✅ All valid entries loaded into database")
 
-# -------- MAIN EXECUTION --------
+# MAIN
 if __name__ == "__main__":
-    conn = create_connection()
+    conn = create_connection(
+        "gradcafe_data", "gradcafe", "abc123", "127.0.0.1", "5432"
+    )
     if conn:
         create_table(conn)
         load_data(conn)

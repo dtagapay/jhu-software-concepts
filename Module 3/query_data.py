@@ -25,6 +25,7 @@ def run_query(conn, label, query):
         print(f"{label}: {result[0]}")
     except Exception as e:
         print(f"❌ Query failed ({label}):", e)
+        conn.rollback()  # Reset so next query isn't blocked
 
 # --- Main Queries ---
 def run_all_queries(conn):
@@ -50,7 +51,6 @@ def run_all_queries(conn):
             ROUND(AVG(gre_aw)::numeric, 2)
         FROM applicants;
     """)
-
     result = cursor.fetchone()
     print(f"   GPA: {result[0]}, GRE: {result[1]}, GRE V: {result[2]}, GRE AW: {result[3]}")
 
@@ -61,7 +61,7 @@ def run_all_queries(conn):
 
     # 5. % of acceptances for Fall 2025
     run_query(conn, "5. % Acceptances (Fall 2025)",
-        "SELECT ROUND(100.0 * COUNT(*) / "
+        "SELECT ROUND(100.0 * COUNT(*)::numeric / "
         "(SELECT COUNT(*) FROM applicants WHERE term ILIKE 'Fall 2025'), 2) "
         "FROM applicants WHERE status ILIKE '%Accepted%' AND term ILIKE 'Fall 2025';")
 
@@ -70,7 +70,7 @@ def run_all_queries(conn):
         "SELECT ROUND(AVG(gpa)::numeric, 2) FROM applicants "
         "WHERE status ILIKE '%Accepted%' AND term ILIKE 'Fall 2025';")
 
-    # 7. Entries for JHU, CS, Master's (all entries, not just Fall 2025)
+    # 7. Entries for JHU, CS, Master's
     run_query(conn, "7. Entries for JHU CS Master’s",
         "SELECT COUNT(*) FROM applicants "
         "WHERE program ILIKE '%Johns Hopkins%' AND program ILIKE '%Computer%' AND degree ILIKE '%Master%';")
