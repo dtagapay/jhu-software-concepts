@@ -1,5 +1,8 @@
 # GradCafe Admissions Data Loader and Analyzer
 
+Darren Agapay (dagapay1@jh.edu)
+DueDate: 6/8/2025
+
 This project loads self-reported graduate school admissions data from The GradCafe into a PostgreSQL database and performs basic SQL-driven analysis on GPA, GRE scores, term stats, and acceptance rates for Fall 2025 applicants.
 
 ## Features
@@ -27,7 +30,7 @@ This project loads self-reported graduate school admissions data from The GradCa
 
 ## Setup Instructions
 
-1. Make sure you have **PostgreSQL installed** and a database created (e.g. `gradcafe_data`).
+1. Make sure you have PostgreSQL (done through pgAdmin4) and a database created (e.g. `gradcafe_data`).
 2. Create a user (e.g. `gradcafe`) and grant it full access to the database.
 3. Install Python dependencies:
 
