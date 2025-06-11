@@ -1,105 +1,307 @@
+
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<html lang="en" data-content_root="./">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Pizza Ordering System’s documentation! &mdash; Pizza Ordering System 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
-    <title>Pizza Ordering System documentation &#8212; Pizza Ordering System 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
-    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=f2a433a1"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
 
-  
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
           
+          
+          <a href="#" class="icon icon-home">
+            Pizza Ordering System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to Pizza Ordering System’s documentation!</a></li>
+<li><a class="reference internal" href="#src-package">src package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.order">src.order module</a><ul>
+<li><a class="reference internal" href="#src.order.Order"><code class="docutils literal notranslate"><span class="pre">Order</span></code></a><ul>
+<li><a class="reference internal" href="#src.order.Order.pizzas"><code class="docutils literal notranslate"><span class="pre">Order.pizzas</span></code></a></li>
+<li><a class="reference internal" href="#src.order.Order.cost"><code class="docutils literal notranslate"><span class="pre">Order.cost</span></code></a></li>
+<li><a class="reference internal" href="#src.order.Order.paid"><code class="docutils literal notranslate"><span class="pre">Order.paid</span></code></a></li>
+<li><a class="reference internal" href="#src.order.Order.input_pizza"><code class="docutils literal notranslate"><span class="pre">Order.input_pizza()</span></code></a></li>
+<li><a class="reference internal" href="#src.order.Order.order_paid"><code class="docutils literal notranslate"><span class="pre">Order.order_paid()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.pizza">src.pizza module</a><ul>
+<li><a class="reference internal" href="#src.pizza.Pizza"><code class="docutils literal notranslate"><span class="pre">Pizza</span></code></a><ul>
+<li><a class="reference internal" href="#src.pizza.Pizza.crust"><code class="docutils literal notranslate"><span class="pre">Pizza.crust</span></code></a></li>
+<li><a class="reference internal" href="#src.pizza.Pizza.sauce"><code class="docutils literal notranslate"><span class="pre">Pizza.sauce</span></code></a></li>
+<li><a class="reference internal" href="#src.pizza.Pizza.cheese"><code class="docutils literal notranslate"><span class="pre">Pizza.cheese</span></code></a></li>
+<li><a class="reference internal" href="#src.pizza.Pizza.toppings"><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code></a></li>
+<li><a class="reference internal" href="#src.pizza.Pizza.total_cost"><code class="docutils literal notranslate"><span class="pre">Pizza.total_cost</span></code></a></li>
+<li><a class="reference internal" href="#src.pizza.Pizza.CHEESE_COST"><code class="docutils literal notranslate"><span class="pre">Pizza.CHEESE_COST</span></code></a></li>
+<li><a class="reference internal" href="#src.pizza.Pizza.CRUST_COST"><code class="docutils literal notranslate"><span class="pre">Pizza.CRUST_COST</span></code></a></li>
+<li><a class="reference internal" href="#src.pizza.Pizza.SAUCE_COST"><code class="docutils literal notranslate"><span class="pre">Pizza.SAUCE_COST</span></code></a></li>
+<li><a class="reference internal" href="#src.pizza.Pizza.TOPPING_COST"><code class="docutils literal notranslate"><span class="pre">Pizza.TOPPING_COST</span></code></a></li>
+<li><a class="reference internal" href="#src.pizza.Pizza.cost"><code class="docutils literal notranslate"><span class="pre">Pizza.cost()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
 
-          <div class="body" role="main">
-            
-  <section id="pizza-ordering-system-documentation">
-<h1>Pizza Ordering System documentation<a class="headerlink" href="#pizza-ordering-system-documentation" title="Link to this heading">¶</a></h1>
-<p>Add your content using <code class="docutils literal notranslate"><span class="pre">reStructuredText</span></code> syntax. See the
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">reStructuredText</a>
-documentation for details.</p>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Pizza Ordering System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to Pizza Ordering System’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-pizza-ordering-system-s-documentation">
+<h1>Welcome to Pizza Ordering System’s documentation!<a class="headerlink" href="#welcome-to-pizza-ordering-system-s-documentation" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 </div>
 </section>
+<section id="src-package">
+<h1>src package<a class="headerlink" href="#src-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.order">
+<span id="src-order-module"></span><h2>src.order module<a class="headerlink" href="#module-src.order" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.order.Order">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.order.</span></span><span class="sig-name descname"><span class="pre">Order</span></span><a class="headerlink" href="#src.order.Order" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to manage a customer’s pizza order.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.order.Order.pizzas">
+<span class="sig-name descname"><span class="pre">pizzas</span></span><a class="headerlink" href="#src.order.Order.pizzas" title="Link to this definition"></a></dt>
+<dd><p>List of pizzas in the order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="#src.pizza.Pizza" title="src.pizza.Pizza">Pizza</a></p>
+</dd>
+</dl>
+</dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.order.Order.cost">
+<span class="sig-name descname"><span class="pre">cost</span></span><a class="headerlink" href="#src.order.Order.cost" title="Link to this definition"></a></dt>
+<dd><p>Total cost of the order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">Pizza Ordering System</a></h1>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.order.Order.paid">
+<span class="sig-name descname"><span class="pre">paid</span></span><a class="headerlink" href="#src.order.Order.paid" title="Link to this definition"></a></dt>
+<dd><p>Payment status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
-
-
-
-
-
-
-
-
-<search id="searchbox" style="display: none" role="search">
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-  </ul></li>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.order.Order.input_pizza">
+<span class="sig-name descname"><span class="pre">input_pizza</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crust</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sauce</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cheese</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toppings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.order.Order.input_pizza" title="Link to this definition"></a></dt>
+<dd><p>Create and add a pizza to the order and update the cost.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crust</strong> (<em>str</em>) – Type of crust.</p></li>
+<li><p><strong>sauce</strong> (<em>list</em><em> of </em><em>str</em>) – Sauce(s) used.</p></li>
+<li><p><strong>cheese</strong> (<em>str</em>) – Type of cheese.</p></li>
+<li><p><strong>toppings</strong> (<em>list</em><em> of </em><em>str</em>) – Toppings list.</p></li>
 </ul>
-</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.order.Order.order_paid">
+<span class="sig-name descname"><span class="pre">order_paid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.order.Order.order_paid" title="Link to this definition"></a></dt>
+<dd><p>Mark the order as paid.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.pizza">
+<span id="src-pizza-module"></span><h2>src.pizza module<a class="headerlink" href="#module-src.pizza" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.pizza.Pizza">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.pizza.</span></span><span class="sig-name descname"><span class="pre">Pizza</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crust</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sauce</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cheese</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toppings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.pizza.Pizza" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to represent a customizable pizza and compute its cost.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.pizza.Pizza.crust">
+<span class="sig-name descname"><span class="pre">crust</span></span><a class="headerlink" href="#src.pizza.Pizza.crust" title="Link to this definition"></a></dt>
+<dd><p>Type of crust.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.pizza.Pizza.sauce">
+<span class="sig-name descname"><span class="pre">sauce</span></span><a class="headerlink" href="#src.pizza.Pizza.sauce" title="Link to this definition"></a></dt>
+<dd><p>List of sauces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.pizza.Pizza.cheese">
+<span class="sig-name descname"><span class="pre">cheese</span></span><a class="headerlink" href="#src.pizza.Pizza.cheese" title="Link to this definition"></a></dt>
+<dd><p>Type of cheese.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.pizza.Pizza.toppings">
+<span class="sig-name descname"><span class="pre">toppings</span></span><a class="headerlink" href="#src.pizza.Pizza.toppings" title="Link to this definition"></a></dt>
+<dd><p>List of toppings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.pizza.Pizza.total_cost">
+<span class="sig-name descname"><span class="pre">total_cost</span></span><a class="headerlink" href="#src.pizza.Pizza.total_cost" title="Link to this definition"></a></dt>
+<dd><p>Total computed cost of the pizza.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.pizza.Pizza.CHEESE_COST">
+<span class="sig-name descname"><span class="pre">CHEESE_COST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'mozzarella':</span> <span class="pre">1}</span></em><a class="headerlink" href="#src.pizza.Pizza.CHEESE_COST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.pizza.Pizza.CRUST_COST">
+<span class="sig-name descname"><span class="pre">CRUST_COST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'gluten_free':</span> <span class="pre">7,</span> <span class="pre">'thick':</span> <span class="pre">6,</span> <span class="pre">'thin':</span> <span class="pre">5}</span></em><a class="headerlink" href="#src.pizza.Pizza.CRUST_COST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.pizza.Pizza.SAUCE_COST">
+<span class="sig-name descname"><span class="pre">SAUCE_COST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'liv_sauce':</span> <span class="pre">5,</span> <span class="pre">'marinara':</span> <span class="pre">2,</span> <span class="pre">'pesto':</span> <span class="pre">3}</span></em><a class="headerlink" href="#src.pizza.Pizza.SAUCE_COST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.pizza.Pizza.TOPPING_COST">
+<span class="sig-name descname"><span class="pre">TOPPING_COST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'mushrooms':</span> <span class="pre">3,</span> <span class="pre">'pepperoni':</span> <span class="pre">2,</span> <span class="pre">'pineapple':</span> <span class="pre">3}</span></em><a class="headerlink" href="#src.pizza.Pizza.TOPPING_COST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.pizza.Pizza.cost">
+<span class="sig-name descname"><span class="pre">cost</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.pizza.Pizza.cost" title="Link to this definition"></a></dt>
+<dd><p>Calculate and return the total cost of the pizza.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total cost of the pizza.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
 
 
+           </div>
+          </div>
+          <footer>
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Darren Agapay.</p>
+  </div>
 
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
-
-
+</footer>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &#169;2025, Darren Agapay.
-      
-      |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-    
-
-    
-  </body>
+</body>
 </html>
