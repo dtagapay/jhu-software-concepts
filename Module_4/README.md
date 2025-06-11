@@ -1,4 +1,6 @@
 Github URL: git@github.com:dtagapay/jhu-software-concepts.git
+ReadtheDocs URL: https://jhu-modern-software-concepts-da.readthedocs.io
+
 
 # 🍕 Pizza Ordering System
 
