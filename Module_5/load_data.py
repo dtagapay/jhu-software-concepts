@@ -1,8 +1,9 @@
+"""Module to create table and load applicant JSON data into PostgreSQL."""
+
 import json
 import psycopg2
 from psycopg2 import OperationalError
 
-"""Module to create table and load applicant JSON data into PostgreSQL."""
 # Function to connect to PostgreSQL
 def create_connection(db_name, db_user, db_password, db_host, db_port):
     """Connect to PostgreSQL database and return the connection."""
@@ -21,7 +22,7 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
     return connection
 
 # Function to create the applicants table
-def create_table(conn):
+def create_table(db_conn):
     """Create the applicants table if it doesn't exist."""
     query = """
     CREATE TABLE IF NOT EXISTS applicants (
@@ -40,9 +41,9 @@ def create_table(conn):
         degree TEXT
     );
     """
-    cursor = conn.cursor()
+    cursor = db_conn.cursor()
     cursor.execute(query)
-    conn.commit()
+    db_conn.commit()
     print("✅ Table 'applicants' ensured")
 
 # Clean GPA/GRE-style fields
@@ -57,13 +58,13 @@ def clean_score(value):
         return None
 
 # Load JSON into the applicants table
-def load_data(conn, filepath="applicant_data.json"):
+def load_data(db_conn, filepath="applicant_data.json"):
     """Load JSON file into the applicants table."""
-    cursor = conn.cursor()
+    cursor = db_conn.cursor()
 
     # 🧹 Clear existing data
     cursor.execute("DELETE FROM applicants;")
-    conn.commit()
+    db_conn.commit()
     print("🧹 Existing data cleared from 'applicants'")
 
     # Load and parse JSON
@@ -92,9 +93,10 @@ def load_data(conn, filepath="applicant_data.json"):
                 clean_score(row.get("GRE AW")),
                 row.get("Degree")
             ))
-        except Exception as e:
+        except (psycopg2.Error, ValueError, TypeError) as e:
+            #log more details or refine error types if needed
             print(f"⚠️ Skipped entry due to error: {e}\nData: {row}")
-    conn.commit()
+    db_conn.commit()
     print("✅ All valid entries loaded into database")
 
 # MAIN
