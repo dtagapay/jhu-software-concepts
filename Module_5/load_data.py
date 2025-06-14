@@ -2,9 +2,8 @@
 
 import json
 import psycopg2
-from psycopg2 import OperationalError
+from psycopg2 import OperationalError, sql
 
-# Function to connect to PostgreSQL
 def create_connection(db_name, db_user, db_password, db_host, db_port):
     """Connect to PostgreSQL database and return the connection."""
     connection = None
@@ -21,7 +20,6 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
         print(f"❌ The error '{e}' occurred")
     return connection
 
-# Function to create the applicants table
 def create_table(db_conn):
     """Create the applicants table if it doesn't exist."""
     query = """
@@ -46,7 +44,6 @@ def create_table(db_conn):
     db_conn.commit()
     print("✅ Table 'applicants' ensured")
 
-# Clean GPA/GRE-style fields
 def clean_score(value):
     """Convert a score to float, return None if invalid or 0.0."""
     try:
@@ -57,13 +54,12 @@ def clean_score(value):
     except (ValueError, TypeError):
         return None
 
-# Load JSON into the applicants table
 def load_data(db_conn, filepath="applicant_data.json"):
     """Load JSON file into the applicants table."""
     cursor = db_conn.cursor()
 
     # 🧹 Clear existing data
-    cursor.execute("DELETE FROM applicants;")
+    cursor.execute(sql.SQL("DELETE FROM {}").format(sql.Identifier("applicants")))
     db_conn.commit()
     print("🧹 Existing data cleared from 'applicants'")
 
@@ -71,15 +67,17 @@ def load_data(db_conn, filepath="applicant_data.json"):
     with open(filepath, "r", encoding="utf-8") as file:
         data = json.load(file)
 
+    insert_query = sql.SQL("""
+        INSERT INTO {table} (
+            program, comments, date_added, url, status, term,
+            us_or_international, gpa, gre, gre_v, gre_aw, degree
+        )
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """).format(table=sql.Identifier("applicants"))
+
     for row in data:
         try:
-            cursor.execute("""
-                INSERT INTO applicants (
-                    program, comments, date_added, url, status, term,
-                    us_or_international, gpa, gre, gre_v, gre_aw, degree
-                )
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, (
+            values = (
                 row.get("program"),
                 row.get("comments"),
                 row.get("date_added"),
@@ -92,14 +90,13 @@ def load_data(db_conn, filepath="applicant_data.json"):
                 clean_score(row.get("GRE V")),
                 clean_score(row.get("GRE AW")),
                 row.get("Degree")
-            ))
+            )
+            cursor.execute(insert_query, values)
         except (psycopg2.Error, ValueError, TypeError) as e:
-            #log more details or refine error types if needed
             print(f"⚠️ Skipped entry due to error: {e}\nData: {row}")
     db_conn.commit()
     print("✅ All valid entries loaded into database")
 
-# MAIN
 if __name__ == "__main__":
     conn = create_connection(
         "gradcafe_data", "gradcafe", "abc123", "127.0.0.1", "5432"
